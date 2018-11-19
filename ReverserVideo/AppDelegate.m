@@ -3,7 +3,7 @@
 //  ReverserVideo
 //
 //  Created by chengzhao on 2018/11/14.
-//  Copyright © 2018年 zhihu. All rights reserved.
+//  Copyright © 2018年 chengzhao. All rights reserved.
 //
 
 #import "AppDelegate.h"

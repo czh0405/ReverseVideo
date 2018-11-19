@@ -13,6 +13,11 @@
 		E9BE6619219C13A000400B03 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9BE6618219C13A000400B03 /* Assets.xcassets */; };
 		E9BE661C219C13A000400B03 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9BE661A219C13A000400B03 /* LaunchScreen.storyboard */; };
 		E9BE661F219C13A000400B03 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BE661E219C13A000400B03 /* main.m */; };
+		E9BE6627219C184B00400B03 /* AVUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BE6625219C184A00400B03 /* AVUtilities.m */; };
+		E9BE6630219C2A3B00400B03 /* 720x960_20_18s.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E9BE662E219C2A3B00400B03 /* 720x960_20_18s.mp4 */; };
+		E9BE6631219C2A3B00400B03 /* IMG_2262.MOV in Resources */ = {isa = PBXBuildFile; fileRef = E9BE662F219C2A3B00400B03 /* IMG_2262.MOV */; };
+		E9BE6633219D462000400B03 /* 720x1280_25_44s.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = E9BE6632219D460900400B03 /* 720x1280_25_44s.mp4 */; };
+		E9BE6636219D49BC00400B03 /* AVReverseUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = E9BE6634219D49BB00400B03 /* AVReverseUtility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +31,13 @@
 		E9BE661B219C13A000400B03 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9BE661D219C13A000400B03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9BE661E219C13A000400B03 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		E9BE6625219C184A00400B03 /* AVUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVUtilities.m; sourceTree = "<group>"; };
+		E9BE6626219C184A00400B03 /* AVUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVUtilities.h; sourceTree = "<group>"; };
+		E9BE662E219C2A3B00400B03 /* 720x960_20_18s.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 720x960_20_18s.mp4; sourceTree = "<group>"; };
+		E9BE662F219C2A3B00400B03 /* IMG_2262.MOV */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = IMG_2262.MOV; sourceTree = "<group>"; };
+		E9BE6632219D460900400B03 /* 720x1280_25_44s.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = 720x1280_25_44s.mp4; sourceTree = "<group>"; };
+		E9BE6634219D49BB00400B03 /* AVReverseUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVReverseUtility.m; sourceTree = "<group>"; };
+		E9BE6635219D49BC00400B03 /* AVReverseUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVReverseUtility.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,13 +74,28 @@
 				E9BE6610219C139E00400B03 /* AppDelegate.m */,
 				E9BE6612219C139E00400B03 /* ViewController.h */,
 				E9BE6613219C139E00400B03 /* ViewController.m */,
+				E9BE6635219D49BC00400B03 /* AVReverseUtility.h */,
+				E9BE6634219D49BB00400B03 /* AVReverseUtility.m */,
+				E9BE6626219C184A00400B03 /* AVUtilities.h */,
+				E9BE6625219C184A00400B03 /* AVUtilities.m */,
 				E9BE6615219C139E00400B03 /* Main.storyboard */,
 				E9BE6618219C13A000400B03 /* Assets.xcassets */,
 				E9BE661A219C13A000400B03 /* LaunchScreen.storyboard */,
 				E9BE661D219C13A000400B03 /* Info.plist */,
 				E9BE661E219C13A000400B03 /* main.m */,
+				E9BE662D219C2A3B00400B03 /* Recources */,
 			);
 			path = ReverserVideo;
+			sourceTree = "<group>";
+		};
+		E9BE662D219C2A3B00400B03 /* Recources */ = {
+			isa = PBXGroup;
+			children = (
+				E9BE6632219D460900400B03 /* 720x1280_25_44s.mp4 */,
+				E9BE662E219C2A3B00400B03 /* 720x960_20_18s.mp4 */,
+				E9BE662F219C2A3B00400B03 /* IMG_2262.MOV */,
+			);
+			path = Recources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -129,6 +156,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9BE661C219C13A000400B03 /* LaunchScreen.storyboard in Resources */,
+				E9BE6633219D462000400B03 /* 720x1280_25_44s.mp4 in Resources */,
+				E9BE6630219C2A3B00400B03 /* 720x960_20_18s.mp4 in Resources */,
+				E9BE6631219C2A3B00400B03 /* IMG_2262.MOV in Resources */,
 				E9BE6619219C13A000400B03 /* Assets.xcassets in Resources */,
 				E9BE6617219C139E00400B03 /* Main.storyboard in Resources */,
 			);
@@ -142,8 +172,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E9BE6614219C139E00400B03 /* ViewController.m in Sources */,
+				E9BE6636219D49BC00400B03 /* AVReverseUtility.m in Sources */,
 				E9BE661F219C13A000400B03 /* main.m in Sources */,
 				E9BE6611219C139E00400B03 /* AppDelegate.m in Sources */,
+				E9BE6627219C184B00400B03 /* AVUtilities.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,12 +316,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ReverserVideo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhihu.media.ReverserVideo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.media.ReverserVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -300,12 +333,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ReverserVideo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.zhihu.media.ReverserVideo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.media.ReverserVideo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
