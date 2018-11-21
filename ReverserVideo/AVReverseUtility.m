@@ -80,6 +80,10 @@
     CMTime segDuration = CMTimeMake(1, 1);
     self.segDuration = segDuration;
     NSArray *videoTracks = [_asset tracksWithMediaType:AVMediaTypeVideo];
+    
+    NSUInteger num = videoTracks.count;
+    NSLog(@"video track number num = %ld", num);
+    
     AVAssetTrack *track = videoTracks[0];
     //should set before starting
     self.writerInput.transform = track.preferredTransform;//fix video orientation
@@ -88,6 +92,9 @@
     [self.writer startSessionAtSourceTime:kCMTimeZero]; //start processing
     
     //divide video into n segmentation
+    Float64 videoDurSeconds =  CMTimeGetSeconds(duration);
+    NSLog(@"Video duration is dur = %f", videoDurSeconds);
+    
     int n = (int)(CMTimeGetSeconds(duration)/CMTimeGetSeconds(segDuration)) + 1;
     if (CMTIMERANGE_IS_VALID(_timeRange)) {
         n = (int)(CMTimeGetSeconds(_timeRange.duration)/CMTimeGetSeconds(segDuration)) + 1;
@@ -149,8 +156,9 @@
                                            nil];
     int width = videoTrack.naturalSize.width;
     int height = videoTrack.naturalSize.height;
+    NSLog(@"width = %d, height = %d", width ,height);
     NSDictionary *writerOutputSettings = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          AVVideoCodecH264, AVVideoCodecKey,
+                                          AVVideoCodecTypeH264, AVVideoCodecKey,
                                           [NSNumber numberWithInt:videoTrack.naturalSize.width], AVVideoWidthKey,
                                           [NSNumber numberWithInt:videoTrack.naturalSize.height], AVVideoHeightKey,
                                           videoCompressionProps, AVVideoCompressionPropertiesKey,
@@ -161,9 +169,10 @@
     [writerInput setExpectsMediaDataInRealTime:NO];
     self.writerInput = writerInput;
     self.writerAdaptor = [[AVAssetWriterInputPixelBufferAdaptor alloc] initWithAssetWriterInput:writerInput sourcePixelBufferAttributes:nil];
-    [self.writer addInput:self.writerInput];
     
-    
+    if ([self.writer canAddInput:self.writerInput])
+        [self.writer addInput:self.writerInput];
+
 }
 
 - (void)generateSamplesWithTrack:(AVAsset *)asset
@@ -182,9 +191,9 @@
     _samples = [[NSMutableArray alloc] init];
     
     CMSampleBufferRef sample;
-    while(sample = [readerOutput copyNextSampleBuffer]) {
+    while((sample = [readerOutput copyNextSampleBuffer])) {
         [_samples addObject:(__bridge id)sample];
-        NSLog(@"count = %d",_samples.count);
+        NSLog(@"count = %ld",_samples.count);
         CFRelease(sample);
     }
     if (_samples.count > 0 ) {
@@ -206,7 +215,7 @@
         
         if (0 == _frame_count) {
             presentationTime = kCMTimeZero;
-            index = _samples.count - i - 2; //倒过来的第一帧是黑的丢弃
+            index = _samples.count - i - 2; //倒过来的第一帧是黑的丢弃,因为文件的长度取值是【0， duration）
         }
         CMTimeShow(presentationTime);
         

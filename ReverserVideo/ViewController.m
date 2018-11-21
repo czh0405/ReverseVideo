@@ -31,7 +31,7 @@
 
 #pragma mark - Actions
 - (IBAction)reverseClipBtnPressed:(id)sender {
-    NSString *sourceFilePath = [[NSBundle mainBundle] pathForResource:@"720x1280_25_44s.mp4" ofType:nil];
+    NSString *sourceFilePath = [[NSBundle mainBundle] pathForResource:@"720x960_20_18s.mp4" ofType:nil];
     NSURL *sourceFileURL = [NSURL fileURLWithPath:sourceFilePath];
     
 //    AVAsset *originalAsset = [[AVURLAsset alloc] initWithURL:sourceFileURL options:nil];
