@@ -38,6 +38,11 @@
 
 @property (nonatomic, copy) NSString *path;
 
+@property (nonatomic) BOOL lastSegment;
+
+@property (nonatomic, assign) CMTime lastSegDuration;
+
+
 @end
 
 
@@ -59,6 +64,10 @@
         _frame_count = 0;
         _offsetTime = kCMTimeZero;
         _intervalTime = kCMTimeZero;
+        
+        _lastSegDuration = kCMTimeZero;
+        _lastSegment = NO;
+        
         [self setupWriterWithPath:path];
         
     }
@@ -76,6 +85,9 @@
     if (CMTIMERANGE_IS_INVALID(_timeRange)) {
         _timeRange = CMTimeRangeMake(kCMTimeZero, _asset.duration);
     }
+    
+    CMTime timeRangeStart = _timeRange.start;
+    
     CMTime duration = _asset.duration;
     CMTime segDuration = CMTimeMake(1, 1);
     self.segDuration = segDuration;
@@ -102,9 +114,21 @@
         
     }
     
+    double diff = CMTimeGetSeconds(_timeRange.duration) - (int)(CMTimeGetSeconds(_timeRange.duration)/CMTimeGetSeconds(segDuration)) * CMTimeGetSeconds(segDuration);
+    if (diff > 0.001f) {
+        _lastSegDuration = CMTimeMakeWithSeconds(diff, _asset.duration.timescale);
+    }
+    
     __weak typeof(self) weakSelf = self;
-    for (int i = 1; i < n; i++) {
-        CMTime offset = CMTimeMultiply(segDuration, i);
+    for (int i = 1; i <= n; i++) {
+        CMTime offset = kCMTimeZero;
+        if (i == n) {
+            _lastSegment = YES;
+            offset = CMTimeAdd(_lastSegDuration, CMTimeMultiply(segDuration, n - 1));
+        } else {
+            offset = CMTimeMultiply(segDuration, i);
+        }
+        
         if (CMTimeCompare(offset, duration) > 0) {
             break;
         }
@@ -114,7 +138,13 @@
             segDuration = CMTimeSubtract(duration, CMTimeMultiply(segDuration, i-1));
         }
         self.compositionTrack = [_composition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
-        [self.compositionTrack insertTimeRange:CMTimeRangeMake(start, segDuration) ofTrack:track atTime:kCMTimeZero error:nil];
+        
+        if (_lastSegment) {
+            [self.compositionTrack insertTimeRange:CMTimeRangeMake(start, _lastSegDuration) ofTrack:track atTime:kCMTimeZero error:nil];
+        }
+        else {
+            [self.compositionTrack insertTimeRange:CMTimeRangeMake(start, segDuration) ofTrack:track atTime:kCMTimeZero error:nil];
+        }
         
         [self generateSamplesWithTrack:_composition];
         
@@ -197,7 +227,11 @@
         CFRelease(sample);
     }
     if (_samples.count > 0 ) {
-        self.intervalTime = CMTimeMakeWithSeconds(CMTimeGetSeconds(self.segDuration)/(float)(_samples.count), _asset.duration.timescale);
+        if (!_lastSegment) {
+            self.intervalTime = CMTimeMakeWithSeconds(CMTimeGetSeconds(self.segDuration)/(float)(_samples.count), _asset.duration.timescale);
+        } else {
+            self.intervalTime = CMTimeMakeWithSeconds(CMTimeGetSeconds(_lastSegDuration)/(float)(_samples.count), _asset.duration.timescale);
+        }
     }
     
 }
