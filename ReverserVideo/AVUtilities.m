@@ -30,7 +30,7 @@ int64_t getClockTime() {
     NSMutableArray *samples = [[NSMutableArray alloc] init];
     
     CMSampleBufferRef sample;
-    while(sample = [readerOutput copyNextSampleBuffer]) {
+    while((sample = [readerOutput copyNextSampleBuffer])) {
         [samples addObject:(__bridge id)sample];
         CFRelease(sample);
     }
