@@ -32,6 +32,9 @@
 #pragma mark - Actions
 - (IBAction)reverseClipBtnPressed:(id)sender {
     NSString *sourceFilePath = [[NSBundle mainBundle] pathForResource:@"720x960_20_18s.mp4" ofType:nil];
+    
+    NSString *sourceFilePathTemp = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"720x960_20_18s.mp4"];
+    
     NSURL *sourceFileURL = [NSURL fileURLWithPath:sourceFilePath];
     
 //    AVAsset *originalAsset = [[AVURLAsset alloc] initWithURL:sourceFileURL options:nil];
@@ -44,6 +47,10 @@
     
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentPath = [paths objectAtIndex:0];
+    
+    NSString *fileName = [strTime stringByAppendingString:@".mp4"];
+    NSString *filePathTemp = [documentPath stringByAppendingPathComponent:fileName];
+    
     NSString *filePath = [NSString stringWithFormat:@"%@/%@.mp4", documentPath, strTime];
     
     // 第一种方法，读取源文件的整个文件，都缓存下来，然后写反着写文件
