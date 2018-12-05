@@ -6,7 +6,7 @@
 //
 
 #import "AVReverseUtility.h"
-
+#import <sys/time.h>
 
 @interface AVReverseUtility()
 
@@ -119,10 +119,16 @@
         _lastSegDuration = CMTimeMakeWithSeconds(diff, _asset.duration.timescale);
     }
     
+    int64_t startTime = [self getClockTime];
+    
     __weak typeof(self) weakSelf = self;
     for (int i = 1; i <= n; i++) {
         CMTime offset = kCMTimeZero;
         if (i == n) {
+            // 没有最后一段的情况
+            if (diff <= 0.001f)
+                break;
+            
             _lastSegment = YES;
             offset = CMTimeAdd(_lastSegDuration, CMTimeMultiply(segDuration, n - 1));
         } else {
@@ -168,6 +174,9 @@
     [self.writer finishWritingWithCompletionHandler:^{
         !weakSelf.callBack? :weakSelf.callBack(weakSelf.writer.status, 1.0f, weakSelf.writer.error);
     }];
+    
+    int64_t endTime = [self getClockTime];
+    NSLog(@"startTime = %lldus, endTime = %lldus, useTime = %fs", startTime, endTime, (endTime - startTime) / 1000000.0f);
     
 }
 
@@ -273,7 +282,12 @@
 }
 
 
-
+- (int64_t) getClockTime
+{
+    struct timeval time;
+    gettimeofday(&time, NULL);
+    return time.tv_sec * 1000000 + time.tv_usec;
+}
 
 
 @end
